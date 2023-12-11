@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main GTG</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-KGEv3KVKbt8eZtCC7oevI+UL2jaGr5pH8OCnVj4C0euJdC6VM/3p+I5cr1TjIz2cOzJ0qBRmtOQy59ynQQ6xYg=="
+        crossorigin="anonymous" />
+    <script src="https://kit.fontawesome.com/183ac1236e.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<style>
+    body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.container {
+    max-width: 600px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px;
+}
+
+.tweet {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 15px;
+    position: relative; /* Ensure relative positioning for absolute children */
+}
+
+.tweet-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.tweet-category-location {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.tweet-buttons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.delete-button,
+.update-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    margin-right: 10px;
+}
+
+.delete-button i,
+.update-button i {
+    font-size: 20px;
+    color: #ff3333; /* Red color for delete button */
+}
+
+.update-button i {
+    color: #3399ff; /* Blue color for update button */
+}
+
+.search-post-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+#searchInput {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.post-container {
+    display: flex;
+    align-items: center;
+}
+
+.post-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+/* Add styles for modals */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%; /* Adjust the width as needed */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+/* Add these styles for the input fields */
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+</style>
+
+<body>
+    <div class="container">
+        <!-- Search and Post Section -->
+        <div class="search-post-section">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search by ID...">
+                <button onclick="searchPersons()"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="post-container">
+                <button class="post-button" onclick="openAddPersonModal()"><i class="fas fa-plus"></i> Post</button>
+            </div>
+        </div>
+        
+
+        <!-- Display Persons in Twitter-Like Feed -->
+        <div id="tweetsContainer"></div>
+    </div>
+
+    <!-- Add Person Modal -->
+    <div id="addPersonModal" class="modal">
+        <div class="modal-content">
+            <form id="addPersonForm">
+                <label for="addName">Name:</label>
+                <input type="text" id="addName" name="name" required><br>
+
+                <label for="addAge">Age:</label>
+                <input type="text" id="addAge" name="age" required><br>
+
+                <label for="addLocation">Location:</label>
+                <input type="text" id="addLocation" name="location" required><br>
+
+                <label for="addPhone">Phone:</label>
+                <input type="text" id="addPhone" name="phone" required><br>
+
+                <label for="addCategory">Category:</label>
+                <input type="text" id="addCategory" name="category" required><br>
+
+                <label for="addLocationEvent">Location Event:</label>
+                <input type="text" id="addLocationEvent" name="location_event" required><br>
+
+                <button type="button" onclick="addPerson()">Add</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Update Person Modal -->
+    <div id="updatePersonModal" class="modal">
+        <div class="modal-content">
+            <h2>Update Person</h2>
+            <form id="updatePersonForm">
+                <input type="hidden" id="updatePersonId" name="id">
+
+                <label for="updateName">Name:</label>
+                <input type="text" id="updateName" name="name" required><br>
+
+                <label for="updateAge">Age:</label>
+                <input type="text" id="updateAge" name="age" required><br>
+
+                <label for="updateLocation">Location:</label>
+                <input type="text" id="updateLocation" name="location" required><br>
+
+                <label for="updatePhone">Phone:</label>
+                <input type="text" id="updatePhone" name="phone" required><br>
+
+                <label for="updateCategory">Category:</label>
+                <input type="text" id="updateCategory" name="category" required><br>
+
+                <label for="updateLocationEvent">Location Event:</label>
+                <input type="text" id="updateLocationEvent" name="location_event" required><br>
+
+
+                <button type="button" onclick="updatePerson()">Update</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function loadAllPersons() {
+            $.ajax({
+                type: 'GET',
+                url: 'https://gtgwebservice987.onrender.com/api/data',
+                success: function (data) {
+                    displayPersons(data);
+                },
+                error: function (error) {
+                    console.error('Error fetching data:', error);
+                }
+            });
+        }
+    
+        function displayPersons(persons) {
+        var container = $('#tweetsContainer');
+        container.empty();
+
+        persons.forEach(function (person) {
+            var tweet = $('<div class="tweet">');
+            var name = $('<div class="tweet-name">').text('Name: ' + person.name);
+            var age = $('<div class="tweet-age">').text('Date: ' + person.age); // Include age in the main tweet
+            var categoryLocation = $('<div class="tweet-category-location">').text('Category: ' + person.category + ' | Location Event: ' + person.location_event + ' | Date: ' + person.age);
+            var location = $('<div class="tweet-location">').text('" ' + person.location + ' "');
+            var buttonsContainer = $('<div class="tweet-buttons">');
+
+            var deleteButton = $('<button class="delete-button" title="Delete"><i class="fas fa-trash-alt"></i></button>');
+            var updateButton = $('<button class="update-button" title="Update"><i class="fas fa-edit"></i></button>');
+
+            deleteButton.on('click', function () {
+                deletePerson(person.id);
+            });
+
+            updateButton.on('click', function () {
+                openUpdatePersonModal(person);
+            });
+
+            buttonsContainer.append(deleteButton, updateButton);
+
+            tweet.append(name, categoryLocation, location, buttonsContainer); // Include age in the main tweet
+            container.append(tweet);
+        });
+    }
+
+
+            
+            function closeAddPersonModal() {
+            $('#addPersonModal').fadeOut();
+        }
+
+        function closeUpdatePersonModal() {
+            $('#updatePersonModal').fadeOut();
+        }
+
+        function openAddPersonModal() {
+            $('#addPersonModal').fadeIn();
+        }
+
+        function openUpdatePersonModal(person) {
+            $('#updatePersonModal').fadeIn();
+
+            // Populate the update form with person data
+            $('#updatePersonId').val(person.id);
+            $('#updateName').val(person.name);
+            $('#updateAge').val(person.age);
+            $('#updateLocation').val(person.location);
+            $('#updatePhone').val(person.phone);
+            $('#updateCategory').val(person.category);
+            $('#updateLocationEvent').val(person.location_event);
+        }
+
+        function addPerson() {
+            const formData = new FormData(document.getElementById("addPersonForm"));
+            sendRequest('POST', 'https://gtgwebservice987.onrender.com/add', formData, closeAddPersonModal);
+        }
+
+        function updatePerson() {
+            const formData = new FormData(document.getElementById('updatePersonForm'));
+
+            fetch('https://gtgwebservice987.onrender.com/update/' + formData.get('id'), {
+                method: 'PATCH',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                closeUpdatePersonModal();
+                fetchUserList();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    
+        function deletePerson(personId) {
+            sendRequest('DELETE', 'https://gtgwebservice987.onrender.com/delete/' + personId);
+        }
+    
+        function sendRequest(method, url, data, successCallback) {
+            $.ajax({
+                type: method,
+                url: url,
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (responseData) {
+                    console.log('Success:', responseData);
+                    if (successCallback) {
+                        successCallback(responseData);
+                    } else {
+                        loadAllPersons();
+                    }
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+    
+        $(document).ready(function () {
+            loadAllPersons();
+        });
+
+
+        function searchPersons() {
+        var searchId = $('#searchInput').val();
+        if (searchId.trim() === '') {
+            // If the search input is empty, load all persons
+            loadAllPersons();
+        } else {
+            // Otherwise, fetch and display the person with the specified ID
+            fetchPersonById(searchId);
+        }
+    }
+
+        function fetchPersonById(personId) {
+            $.ajax({
+                type: 'GET',
+                url: 'https://gtgwebservice987.onrender.com/api/data',
+                success: function (data) {
+                    // Find the person with the specified ID
+                    var person = data.find(function (p) {
+                        return p.id === personId;
+                    });
+
+                    // Display the person in the table
+                    displayPersons([person]);
+                },
+                error: function (error) {
+                    console.error('Error fetching data:', error);
+                }
+            });
+        }
+
+    </script>
+    
+</body>
+
+</html>
