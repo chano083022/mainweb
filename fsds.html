@@ -10,8 +10,179 @@
         integrity="sha512-KGEv3KVKbt8eZtCC7oevI+UL2jaGr5pH8OCnVj4C0euJdC6VM/3p+I5cr1TjIz2cOzJ0qBRmtOQy59ynQQ6xYg=="
         crossorigin="anonymous" />
     <script src="https://kit.fontawesome.com/183ac1236e.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="styless.css">
+    
 </head>
+
+    <style>
+    body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.container {
+    max-width: 600px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px;
+}
+
+.tweet {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 15px;
+    position: relative; /* Ensure relative positioning for absolute children */
+}
+
+.tweet-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.tweet-category-location {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.tweet-buttons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.delete-button,
+.update-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    margin-right: 10px;
+}
+
+.delete-button i,
+.update-button i {
+    font-size: 20px;
+    color: #ff3333; /* Red color for delete button */
+}
+
+.update-button i {
+    color: #3399ff; /* Blue color for update button */
+}
+
+.search-post-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+#searchInput {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.post-container {
+    display: flex;
+    align-items: center;
+}
+
+.post-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+/* Add styles for modals */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%; /* Adjust the width as needed */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+/* Add these styles for the input fields */
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+</style>
 
 <body>
     <div class="container">
