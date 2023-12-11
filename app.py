@@ -176,7 +176,8 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 # Route to render the HTML file
 @app.route('/')
 def index():
-    return render_template('index.html')  # Fix: Add quotes around the file name
+    return render_template('index.html')
+
 
 if __name__ == '__main__':
     # Run the app on port 80
