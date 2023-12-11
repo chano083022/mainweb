@@ -173,7 +173,7 @@ app = Flask(__name__)
 
 # Define the base directory and HTML file path
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-HTML_FILE = os.path.join(BASE_DIR, "path/to/your/html/files/index.html")
+HTML_FILE = os.path.join(BASE_DIR, "fsds.html")
 
 # Route to render the HTML file
 @app.route('/')
