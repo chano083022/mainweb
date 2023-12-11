@@ -172,12 +172,11 @@ app = Flask(__name__)
 
 # Define the base directory and HTML file path
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-HTML_FILE = os.path.join(BASE_DIR, "fsds.html")
 
 # Route to render the HTML file
 @app.route('/')
 def index():
-    return render_template(HTML_FILE)
+    return render_template('index.html')  # Fix: Add quotes around the file name
 
 if __name__ == '__main__':
     # Run the app on port 80
